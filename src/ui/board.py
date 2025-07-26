@@ -1,42 +1,34 @@
-from textual.widget import Widget
-from textual.strip import Strip
-from rich.segment import Segment
+from src.ui import icon
 
 
-class CheckerBoard(Widget):
-    COMPONENT_CLASSES = {
-        "checkerboard--white-cell",
-        "checkerboard--black-cell",
-    }
+class CheckerBoard:
+    def __init__(self):
+        self.squares = []
+        self.init_squares()
 
-    DEFAULT_CSS = """
-    CheckerBoard .checkerboard--white-cell {
-    background: #eeeed2;
-    }
-    CheckerBoard .checkerboard--black-cell {
-    background: #769656;
-    }
-    """
+    def draw(self):
+        lines = []
+        for r in range(len(self.squares)):
+            lines.append("".join(self.squares[r]))
+        print("\n".join(lines))
 
-    def __init__(self, cellsize: int):
-        super().__init__()
-        self.cellsize = cellsize
+    def init_squares(self):
+        row = []
+        for r in range(9):
+            column = []
+            for c in range(9):
+                if r == 0 and c == 0:
+                    column.append(icon.empty_square)
+                elif r > 0 and c == 0:
+                    column.append(icon.number_squares[r - 1])
+                elif r == 0 and c > 0:
+                    column.append(icon.letter_squares[c - 1])
+                elif (r + (c % 2)) % 2 == 0:
+                    column.append(icon.black_square)
+                else:
+                    column.append(icon.white_square)
+            row.append(column)
+        self.squares = row
 
-    def render_line(self, y: int) -> Strip:
-        row_index = y // (self.cellsize / 2)
-        if row_index >= 8:
-            return Strip.blank(self.size.width)
-
-        # todo: replace with css
-        white = self.get_component_rich_style("checkerboard--white-cell")
-        black = self.get_component_rich_style("checkerboard--black-cell")
-
-        is_odd = row_index % 2
-
-        segments = [
-            Segment(" " * self.cellsize, black if (column + is_odd) % 2 else white)
-            for column in range(8)
-        ]
-
-        strip = Strip(segments)
-        return strip
+    def init_pieces(self):
+        pass

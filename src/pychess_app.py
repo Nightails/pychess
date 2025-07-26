@@ -1,14 +1,15 @@
-from textual.app import App, ComposeResult
 from src.core.gamestate import GameState
 from src.core.board import Board
 from src.ui.board import CheckerBoard
 
 
-class PyChess(App):
+class PyChess:
     def __init__(self):
-        super().__init__()
         self.gamestate = GameState()
         self.board = Board()
+        self.board_ui = CheckerBoard()
 
-    def compose(self) -> ComposeResult:
-        yield CheckerBoard(6)
+    def run(self):
+        print("Running PyChess...")
+        self.board_ui.draw()
+        input(":")
