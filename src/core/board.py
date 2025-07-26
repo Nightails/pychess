@@ -1,5 +1,5 @@
 from pygame.math import Vector2
-from core.piece import Color, Pawn, Rook, Knight, Bishop, Queen, King
+from src.core.piece import Color, Pawn, Rook, Knight, Bishop, Queen, King
 
 
 class Board:
