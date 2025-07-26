@@ -4,4 +4,7 @@ version = "0.1.0"
 description = "cli chess game created in python for boot.dev hackathon 2025"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "textual>=5.0.1",
+    "vectormath>=0.2.2",
+]
