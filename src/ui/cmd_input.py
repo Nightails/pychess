@@ -6,3 +6,4 @@ class CMDInput(Input):
         super().__init__()
         self.border_title = "Command"
         self.styles.border = ("round", "white")
+        self.styles.background = "black"

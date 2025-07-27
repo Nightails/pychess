@@ -10,6 +10,12 @@ class PyChess(App):
     gamestate = GameState()
     board = Board()
 
+    CSS = """
+    Screen {
+        background: black;
+    }
+    """
+
     def on_mount(self) -> None:
         self.screen.border_title = "PyChess"
         self.screen.styles.border = ("double", "white")
