@@ -18,14 +18,14 @@ class BoardPanel(Static):
         self.styles.border = ("round", "white")
         self.styles.width = "1fr"
 
-    def update_board(self, layout: dict) -> None:
+    def update_board(self, layout: dict):
         self.layout = layout
         self.draw_board()
         self.draw_pieces()
         content = self.layout_to_text()
         self.update(content)
 
-    def draw_board(self) -> None:
+    def draw_board(self):
         row = []
         for r in range(9):
             column = []
@@ -43,7 +43,7 @@ class BoardPanel(Static):
             row.append(column)
         self.squares = row
 
-    def draw_pieces(self) -> None:
+    def draw_pieces(self):
         for key in self.layout.keys():
             piece = self.layout[key]
             color = piece.color.value
@@ -51,7 +51,7 @@ class BoardPanel(Static):
             piece_icon = icon.pieces[color][name]
             self.squares[key[1]][key[0]] = piece_icon
 
-    def layout_to_text(self) -> str:
+    def layout_to_text(self):
         lines = []
         for r in range(len(self.squares)):
             lines.append("".join(self.squares[r]))

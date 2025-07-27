@@ -15,7 +15,7 @@ class Board:
         self.layout = init_board_layout(self.pieces)
 
 
-def init_pieces(color: Color) -> list:
+def init_pieces(color: Color):
     pieces = []
 
     # White facing up and Black facing down
@@ -45,7 +45,7 @@ def init_pieces(color: Color) -> list:
     return pieces
 
 
-def init_board_layout(pieces: list) -> dict:
+def init_board_layout(pieces: list):
     board = {}
     for piece in pieces:
         board[int(piece.position.x), int(piece.position.y)] = piece
