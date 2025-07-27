@@ -8,6 +8,7 @@ from src.ui.board_panel import BoardPanel
 from src.ui.info_panel import InfoPanel
 from src.ui.log_panel import LogPanel
 from src.ui.cmd_panel import CMDPanel
+from src.ui.panel import StatusPanel
 
 
 class PyChess(App):
@@ -28,6 +29,7 @@ class PyChess(App):
 
     def compose(self):
         yield Container(
+            StatusPanel(self.gamestate.get_turn()),
             Horizontal(
                 InfoPanel(),
                 BoardPanel(self.board.layout),
@@ -41,4 +43,10 @@ class PyChess(App):
         cmd = self.query_one(CMDPanel)
         log = self.query_one(LogPanel)
         log.update_log(cmd.value)
+        self.update_turn()
         cmd.value = ""
+
+    def update_turn(self):
+        self.gamestate.next_turn()
+        status = self.query_one(StatusPanel)
+        status.update(self.gamestate.get_turn())
