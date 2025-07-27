@@ -1,5 +1,6 @@
+from textual import on
 from textual.app import App
-from textual.containers import Horizontal
+from textual.containers import Container, Horizontal
 
 from src.core.gamestate import GameState
 from src.core.board import Board
@@ -20,22 +21,24 @@ class PyChess(App):
         super().__init__()
         self.gamestate = GameState()
         self.board = Board()
-        self.input = ""
 
     def on_mount(self):
         self.screen.border_title = "PyChess"
         self.screen.styles.border = ("double", "white")
 
     def compose(self):
-        self.info_panel = InfoPanel()
-        self.board_panel = BoardPanel()
-        self.board_panel.update_board(self.board.layout)
-        self.log_panel = LogPanel()
-        self.cmd_panel = CMDPanel()
-
-        yield Horizontal(
-            self.info_panel,
-            self.board_panel,
-            self.log_panel,
+        yield Container(
+            Horizontal(
+                InfoPanel(),
+                BoardPanel(self.board.layout),
+                LogPanel(),
+            ),
+            CMDPanel(),
         )
-        yield self.cmd_panel
+
+    @on(CMDPanel.Submitted)
+    def cmd_to_move(self):
+        cmd = self.query_one(CMDPanel)
+        log = self.query_one(LogPanel)
+        log.update_log(cmd.value)
+        cmd.value = ""

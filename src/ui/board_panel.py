@@ -12,11 +12,12 @@ class BoardPanel(Static):
     }
     """
 
-    def __init__(self):
+    def __init__(self, layout: dict):
         super().__init__()
         self.border_title = "Board"
         self.styles.border = ("round", "white")
         self.styles.width = "1fr"
+        self.update_board(layout)
 
     def update_board(self, layout: dict):
         self.layout = layout
