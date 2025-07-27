@@ -3,6 +3,7 @@ from textual.app import App, RenderResult
 from src.core.gamestate import GameState
 from src.core.board import Board
 from src.ui.board import CheckerBoard
+from src.ui.cmd_input import CMDInput
 
 
 class PyChess(App):
@@ -16,4 +17,8 @@ class PyChess(App):
     def compose(self) -> RenderResult:
         self.board_ui = CheckerBoard()
         self.board_ui.update_board(self.board.layout)
+
+        self.cmd_ui = CMDInput()
+
         yield self.board_ui
+        yield self.cmd_ui
