@@ -1,12 +1,10 @@
-from textual.app import RenderResult
-from textual.widget import Widget
+from textual.widgets import Static
 from src.ui import icon
 
 
-class CheckerBoard(Widget):
+class CheckerBoard(Static):
     squares = []
     layout = {}
-    text = ""
 
     DEFAULT_CSS = """
     CheckerBoard {
@@ -19,14 +17,12 @@ class CheckerBoard(Widget):
         self.border_title = "Board"
         self.styles.border = ("round", "white")
 
-    def render(self) -> RenderResult:
-        return self.text
-
     def update_board(self, layout: dict) -> None:
         self.layout = layout
         self.draw_board()
         self.draw_pieces()
-        self.text = self.layout_to_text()
+        content = self.layout_to_text()
+        self.update(content)
 
     def draw_board(self) -> None:
         row = []
