@@ -6,7 +6,7 @@ from src.core.board import Board
 from src.ui.board_panel import BoardPanel
 from src.ui.info_panel import InfoPanel
 from src.ui.log_panel import LogPanel
-from src.ui.cmd_input import CMDInput
+from src.ui.cmd_panel import CMDPanel
 
 
 class PyChess(App):
@@ -28,7 +28,7 @@ class PyChess(App):
         self.board_panel = BoardPanel()
         self.board_panel.update_board(self.board.layout)
         self.log_panel = LogPanel()
-        self.cmd_ui = CMDInput()
+        self.cmd_ui = CMDPanel()
 
         yield Horizontal(
             self.info_panel,
