@@ -2,12 +2,12 @@ from textual.widgets import Static
 from src.ui import icon
 
 
-class CheckerBoard(Static):
+class BoardPanel(Static):
     squares = []
     layout = {}
 
     DEFAULT_CSS = """
-    CheckerBoard {
+    BoardPanel {
         content-align: center middle;
     }
     """
@@ -16,6 +16,7 @@ class CheckerBoard(Static):
         super().__init__()
         self.border_title = "Board"
         self.styles.border = ("round", "white")
+        self.styles.width = "1fr"
 
     def update_board(self, layout: dict) -> None:
         self.layout = layout

@@ -1,8 +1,11 @@
 from textual.app import App, RenderResult
+from textual.containers import Horizontal
 
 from src.core.gamestate import GameState
 from src.core.board import Board
-from src.ui.board import CheckerBoard
+from src.ui.board_panel import BoardPanel
+from src.ui.info_panel import InfoPanel
+from src.ui.log_panel import LogPanel
 from src.ui.cmd_input import CMDInput
 
 
@@ -21,10 +24,15 @@ class PyChess(App):
         self.screen.styles.border = ("double", "white")
 
     def compose(self) -> RenderResult:
-        self.board_ui = CheckerBoard()
-        self.board_ui.update_board(self.board.layout)
-
+        self.info_panel = InfoPanel()
+        self.board_panel = BoardPanel()
+        self.board_panel.update_board(self.board.layout)
+        self.log_panel = LogPanel()
         self.cmd_ui = CMDInput()
 
-        yield self.board_ui
+        yield Horizontal(
+            self.info_panel,
+            self.board_panel,
+            self.log_panel,
+        )
         yield self.cmd_ui
