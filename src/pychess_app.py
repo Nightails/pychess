@@ -1,23 +1,19 @@
-from rich.console import Console
-from rich.panel import Panel
-from rich.text import Text
-from rich.prompt import Prompt
+from textual.app import App, RenderResult
 
 from src.core.gamestate import GameState
 from src.core.board import Board
 from src.ui.board import CheckerBoard
 
 
-class PyChess:
+class PyChess(App):
     gamestate = GameState()
     board = Board()
-    board_ui = CheckerBoard(board.layout)
 
-    def run(self):
-        console = Console()
+    def on_mount(self) -> None:
+        self.screen.border_title = "PyChess"
+        self.screen.styles.border = ("double", "white")
 
-        board_layout = Text(self.board_ui.board_layout(), justify="center")
-        board_panel = Panel(board_layout, title="PyChess")
-        console.print(board_panel)
-
-        cmd = Prompt.ask("Move")
+    def compose(self) -> RenderResult:
+        self.board_ui = CheckerBoard()
+        self.board_ui.update_board(self.board.layout)
+        yield self.board_ui

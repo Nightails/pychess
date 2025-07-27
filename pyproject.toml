@@ -7,4 +7,5 @@ requires-python = ">=3.13"
 dependencies = [
     "pygame>=2.6.1",
     "rich>=14.1.0",
+    "textual>=5.0.1",
 ]
