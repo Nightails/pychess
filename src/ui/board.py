@@ -2,17 +2,22 @@ from src.ui import icon
 
 
 class CheckerBoard:
-    def __init__(self):
-        self.squares = []
-        self.init_squares()
+    squares = []
+    layout = {}
+
+    def __init__(self, layout: dict):
+        self.update_board(layout)
 
     def board_layout(self):
+        self.draw_board()
+        self.draw_pieces()
+
         lines = []
         for r in range(len(self.squares)):
             lines.append("".join(self.squares[r]))
         return "\n".join(lines)
 
-    def init_squares(self):
+    def draw_board(self):
         row = []
         for r in range(9):
             column = []
@@ -30,5 +35,13 @@ class CheckerBoard:
             row.append(column)
         self.squares = row
 
-    def init_pieces(self):
-        pass
+    def draw_pieces(self):
+        for key in self.layout.keys():
+            piece = self.layout[key]
+            color = piece.color.value
+            name = piece.name.value
+            piece_icon = icon.pieces[color][name]
+            self.squares[key[1]][key[0]] = piece_icon
+
+    def update_board(self, layout: dict):
+        self.layout = layout

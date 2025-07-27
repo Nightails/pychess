@@ -3,16 +3,16 @@ from src.core.piece import Color, Pawn, Rook, Knight, Bishop, Queen, King
 
 
 class Board:
-    def __init__(self):
-        self.pieces: list = []  # track pieces currently on board
-        self.board: dict = {}  # track currently occupied spaces
+    pieces: list = []  # track pieces currently on board
+    layout: dict = {}  # track currently occupied spaces
 
+    def __init__(self):
         # spawning pieces
         self.pieces.extend(init_pieces(Color.WHITE))
         self.pieces.extend(init_pieces(Color.BLACK))
 
         # board layout
-        self.board = init_board_layout(self.pieces)
+        self.layout = init_board_layout(self.pieces)
 
 
 def init_pieces(color: Color) -> list:
@@ -48,5 +48,5 @@ def init_pieces(color: Color) -> list:
 def init_board_layout(pieces: list) -> dict:
     board = {}
     for piece in pieces:
-        board[piece.position.x, piece.position.y] = piece
+        board[int(piece.position.x), int(piece.position.y)] = piece
     return board
