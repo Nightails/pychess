@@ -6,11 +6,11 @@ class CheckerBoard:
         self.squares = []
         self.init_squares()
 
-    def draw(self):
+    def board_layout(self):
         lines = []
         for r in range(len(self.squares)):
             lines.append("".join(self.squares[r]))
-        print("\n".join(lines))
+        return "\n".join(lines)
 
     def init_squares(self):
         row = []
