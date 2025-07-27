@@ -39,9 +39,17 @@ class PyChess(App):
     def cmd_to_move(self):
         cmd = self.query_one(CMDPanel)
         log = self.query_one(LogPanel)
+
+        self.make_move(cmd.value)
         log.update_log(cmd.value)
         self.update_turn()
+
         cmd.value = ""
+
+    def make_move(self, move: str):
+        if self.board.move_piece(move):
+            board = self.query_one(BoardPanel)
+            board.update_board(self.board.layout)
 
     def update_turn(self):
         self.gamestate.next_turn()

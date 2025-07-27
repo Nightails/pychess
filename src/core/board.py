@@ -1,5 +1,6 @@
 from pygame.math import Vector2
 from src.core.piece import Color, Pawn, Rook, Knight, Bishop, Queen, King
+from src.core.util import text_to_coordinates
 
 
 class Board:
@@ -14,8 +15,26 @@ class Board:
         # board layout
         self.layout = init_board_layout(self.pieces)
 
+    def move_piece(self, cmd: str) -> bool:
+        # parse text to chess commend - from coordinate, to coordinate
+        coords = text_to_coordinates(cmd)
+        if coords is None or type(coords) is not tuple:
+            return False
 
-def init_pieces(color: Color):
+        # find the piece at given coordinate
+        piece = self.layout[coords[0].x, coords[0].y]
+        if piece is None:
+            return False
+
+        # move that piece to new position and update the layout
+        piece.position = coords[1]
+        self.layout[int(piece.position.x), int(piece.position.y)] = piece
+        del self.layout[coords[0].x, coords[0].y]
+
+        return True
+
+
+def init_pieces(color: Color) -> list:
     pieces = []
 
     # White facing up and Black facing down
@@ -45,7 +64,7 @@ def init_pieces(color: Color):
     return pieces
 
 
-def init_board_layout(pieces: list):
+def init_board_layout(pieces: list) -> dict:
     board = {}
     for piece in pieces:
         board[int(piece.position.x), int(piece.position.y)] = piece
