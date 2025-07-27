@@ -15,7 +15,7 @@ class Board:
         # board layout
         self.layout = init_board_layout(self.pieces)
 
-    def move_piece(self, cmd: str) -> bool:
+    def move_piece(self, cmd: str, is_white_turn: bool) -> bool:
         # parse text to chess commend - from coordinate, to coordinate
         coords = text_to_coordinates(cmd)
         if coords is None or type(coords) is not tuple:
@@ -25,6 +25,14 @@ class Board:
         piece = self.layout[coords[0].x, coords[0].y]
         if piece is None:
             return False
+
+        # only move pieces on their turn
+        if is_white_turn and piece.color is Color.BLACK:
+            return False
+        if not is_white_turn and piece.color is Color.WHITE:
+            return False
+
+        # todo: check new position is valid, according to piece's move rule
 
         # move that piece to new position and update the layout
         piece.position = coords[1]
