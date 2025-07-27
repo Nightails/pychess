@@ -8,14 +8,12 @@ Written in Python, this project is made in part of [Boot.dev](https://boot.dev) 
 > This is still a work-in-progress, with missing features.
 
 ## Requirements
-----
 
 - **Python**: 3.13+
 - **Package Manager**: [uv](https://docs.astral.sh/uv/) (recommended for managing dependencies)
 - **Platform**: ✔️Linux, ❓macOS, ❓Windows
 
 ## Install & Setup
-----
 
 1. Install uv
 
@@ -48,7 +46,6 @@ uv run main.py
 ```
 
 ## Roadmap
-----
 
 - [ ] AI opponents
 - [ ] Multiplayer
