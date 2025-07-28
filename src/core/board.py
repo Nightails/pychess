@@ -20,11 +20,18 @@ class Board:
         if coords is None:
             return False
 
-        # find the piece at given coordinate
-        if (int(coords[0].x), int(coords[0].y)) not in self.layout:
+        from_pos = (int(coords[0].x), int(coords[0].y))
+        to_pos = (int(coords[1].x), int(coords[1].y))
+
+        # is from-positon occupied
+        if not self.is_occupied(from_pos):
+            return False
+        # is to-positon occupied
+        if self.is_occupied(to_pos):
+            # can't move into occupied space at the moment
             return False
 
-        piece = self.layout[coords[0].x, coords[0].y]
+        piece = self.layout[from_pos]
 
         # only move pieces on their turn
         if is_white_turn and piece.color is Color.BLACK:
@@ -33,15 +40,18 @@ class Board:
             return False
 
         # todo: check new position is valid, according to piece's move rule
-        if not piece.is_valid_position(coords[1]):
-            return False
+        # if not piece.is_valid_position(coords[1]):
+        #    return False
 
         # move that piece to new position and update the layout
         piece.position = coords[1]
         self.layout[int(piece.position.x), int(piece.position.y)] = piece
-        del self.layout[coords[0].x, coords[0].y]
+        del self.layout[from_pos]
 
         return True
+
+    def is_occupied(self, pos: tuple):
+        return pos in self.layout
 
 
 def init_pieces(color: Color) -> list:
