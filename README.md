@@ -53,6 +53,8 @@ uv run main.py
 
 ## Roadmap & Personal Note
 
+![Current Progress](assets/images/pychess_v0.0.1a.png)
+
 1. **To-do**:
 - [ ] Move rule
 - [ ] Piece taking
