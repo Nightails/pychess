@@ -1,30 +1,30 @@
 from pygame.math import Vector2
 from src.core.piece import Color, Pawn, Rook, Knight, Bishop, Queen, King
-from src.core.util import text_to_coordinates
+from src.core.util import text_to_positions
 
 
 class Board:
-    pieces: list = []  # track pieces currently on board
-    layout: dict = {}  # track currently occupied spaces
+    # track currently occupied spaces, and all the pieces on the board
+    layout: dict = {}
 
     def __init__(self):
         # spawning pieces
-        self.pieces.extend(init_pieces(Color.WHITE))
-        self.pieces.extend(init_pieces(Color.BLACK))
-
+        pieces = init_pieces(Color.WHITE)
+        pieces.extend(init_pieces(Color.BLACK))
         # board layout
-        self.layout = init_board_layout(self.pieces)
+        self.layout = init_board_layout(pieces)
 
     def move_piece(self, cmd: str, is_white_turn: bool) -> bool:
-        # parse text to chess commend - from coordinate, to coordinate
-        coords = text_to_coordinates(cmd)
-        if coords is None or type(coords) is not tuple:
+        # parse text to chess commend - from position, to position
+        coords = text_to_positions(cmd)
+        if coords is None:
             return False
 
         # find the piece at given coordinate
-        piece = self.layout[coords[0].x, coords[0].y]
-        if piece is None:
+        if (int(coords[0].x), int(coords[0].y)) not in self.layout:
             return False
+
+        piece = self.layout[coords[0].x, coords[0].y]
 
         # only move pieces on their turn
         if is_white_turn and piece.color is Color.BLACK:
@@ -33,6 +33,8 @@ class Board:
             return False
 
         # todo: check new position is valid, according to piece's move rule
+        if not piece.is_valid_position(coords[1]):
+            return False
 
         # move that piece to new position and update the layout
         piece.position = coords[1]
